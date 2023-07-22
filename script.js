@@ -2,18 +2,20 @@ var cvs = document.getElementById("canvas");
 var ctx = cvs.getContext("2d");
 
 // load images
-
-var bird = new Image();
+var cat = new Image();
 var bg = new Image();
-var fg = new Image();
+var background = new Image();
+var foreground = new Image();
 var pipeNorth = new Image();
 var pipeSouth = new Image();
 
-bird.src = "images/bird.png";
+cat.src = "images/cat.png";
 bg.src = "images/bg.png";
-fg.src = "images/fg.png";
+background.src = "images/background.png";
+foreground.src = "images/foreground.png";
 pipeNorth.src = "images/pipeNorth.png";
 pipeSouth.src = "images/pipeSouth.png";
+
 
 
 // some variables
@@ -24,7 +26,7 @@ var constant;
 var bX = 10;
 var bY = 150;
 
-var gravity = 1.5;
+var gravity = 1.05;
 
 var score = 0;
 
@@ -34,7 +36,7 @@ var fly = new Audio();
 var scor = new Audio();
 
 // fly.src = "sounds/fly.mp3";
-// scor.src = "sounds/score.mp3";
+scor.src = "sounds/score.mp3";
 
 // on key down
 
@@ -58,7 +60,8 @@ pipe[0] = {
 
 function draw(){
     
-    ctx.drawImage(bg,0,0);
+    ctx.drawImage(background,0,0);
+    // ctx.drawImage(bg,0,0);
     
     
     for(var i = 0; i < pipe.length; i++){
@@ -77,10 +80,11 @@ function draw(){
         }
 
         // detect collision
-        
-        if( bX + bird.width >= pipe[i].x && bX <= pipe[i].x + pipeNorth.width && (bY <= pipe[i].y + pipeNorth.height || bY+bird.height >= pipe[i].y+constant) || bY + bird.height >=  cvs.height - fg.height){
+        if( bX + cat.width >= pipe[i].x && bX <= pipe[i].x + pipeNorth.width && (bY <= pipe[i].y + pipeNorth.height || bY+cat.height >= pipe[i].y+constant) || bY + cat.height >=  cvs.height - foreground.height){
             location.reload(); // reload the page
         }
+    
+        
         
         if(pipe[i].x == 5){
             score++;
@@ -90,13 +94,13 @@ function draw(){
         
     }
 
-    ctx.drawImage(fg,0,cvs.height - fg.height);
+    ctx.drawImage(foreground,0,cvs.height - foreground.height);
     
-    ctx.drawImage(bird,bX,bY);
+    ctx.drawImage(cat,bX,bY);
     
     bY += gravity;
     
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = "white";
     ctx.font = "20px Verdana";
     ctx.fillText("Score : "+score,10,cvs.height-20);
     
